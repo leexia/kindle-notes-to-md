@@ -183,7 +183,7 @@ class Kindle_notes:
         # add the source of the text
         new_source = note.source.rsplit('>')[0].rsplit('-')[1]
         # new_source = new_source.rsplit('-')[1]
-        print("last_source: {}, new_source:{}".format(last_source, new_source))
+        # print("last_source: {}, new_source:{}".format(last_source, new_source))
         if last_source != new_source:
           md += "`{}`\n".format(new_source)
           md += "---\n"

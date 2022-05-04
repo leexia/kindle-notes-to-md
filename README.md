@@ -10,6 +10,7 @@ The output format is particularly suitable for copy-pasting into
 # Update
 
 - 修改支持中文笔记和标注
+- 调整输出格式，加入分割线，以及使用source进行分割
 
 
 # Quickstart
