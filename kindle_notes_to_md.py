@@ -8,6 +8,7 @@ from collections import OrderedDict
 from encodings import utf_8
 import sys
 import traceback
+import os
 
 from bs4 import BeautifulSoup
 
@@ -155,32 +156,39 @@ class Kindle_notes:
     # write the markdown file
 
     # title & author
-    md =  "- Meta:\n"
-    md += "  - title: {}\n".format(self.book_title)
-    md += "  - author: {}\n".format(self.author)
-    md += "  - tags: #Books\n"
-
+    # md =  "- Meta:\n"
+    # md += "  - title: {}\n".format(self.book_title)
+    # md += "  - author: {}\n".format(self.author)
+    # md += "  - tags: #Books\n"
+    md = ""
     # all the highlights
-    md += "- # Raw Highlights & Notes:\n"
-
+    md += "# Raw Highlights & Notes:\n"
+    last_source  = ""
     # for each chapter...
     for chapter in self.chapter_notes:
       # add a new heading 1 bullet with the chapter title
-      md += "  - ## {}\n".format(chapter.title)
+      md += "## {}\n".format(chapter.title)
 
       # for each note in the chapter...
       for location in chapter.notes:
         note = chapter.notes[location]
 
         # add the highlighted text
-        md += "    - {}\n".format(note.text)
+        md += "> {}\n".format(note.text)
 
         # if there is a note, add it in bold
         if note.note != '':
-          md += "      - **{}**\n".format(note.note)
+          md += "- **{}**\n".format(note.note)
 
         # add the source of the text
-        md += "      - {}\n".format(note.source)
+        new_source = note.source.rsplit('>')[0].rsplit('-')[1]
+        # new_source = new_source.rsplit('-')[1]
+        print("last_source: {}, new_source:{}".format(last_source, new_source))
+        if last_source != new_source:
+          md += "`{}`\n".format(new_source)
+          md += "---\n"
+          last_source = new_source
+        
 
     # WARN("TODO: check if the file exists and handle as appropriate")
 
@@ -206,6 +214,9 @@ def parse_command_line_args():
                       help = 'File to which to save the Markdown document')
 
   args = parser.parse_args()
+
+  if args.output == "converted.md":
+    args.output = os.path.split(args.input)[1]+".md"
   return args
 
 
