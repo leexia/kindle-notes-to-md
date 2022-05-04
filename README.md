@@ -7,6 +7,10 @@ The output format is particularly suitable for copy-pasting into
 
 ![Screenshot](screenshot.png)
 
+# Update
+
+- 修改支持中文笔记和标注
+
 
 # Quickstart
 
@@ -27,3 +31,4 @@ If you copy-paste the contents of that file into
 # How to get your notes in HTML format
 
 I generally read and take notes on my Kindle e-ink reader. When I finish a book, I open the same book on the Kindle app on my phone, go to "My Notebook" for the book (the icon looks like a page with lines), then Export Notebook. This saves the HTML file you can convert.
+

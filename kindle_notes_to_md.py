@@ -5,6 +5,7 @@ to a Markdown document
 '''
 import argparse
 from collections import OrderedDict
+from encodings import utf_8
 import sys
 import traceback
 
@@ -49,7 +50,7 @@ class Kindle_notes:
     # parse an input HTML file
 
     # read the file to a string
-    with open(html_file, 'r') as fp:
+    with open(html_file, 'r', encoding="utf8") as fp:
       htmls = fp.read()
 
     # parse the string
@@ -113,7 +114,7 @@ class Kindle_notes:
           # because that's what the note is about
           # sometimes the exported notes have slightly different locations for
           #   highlights and notes on long passages
-          if last_note_type == 'Note':
+          if last_note_type == 'Note' or last_note_type == "笔记":
             try:
               wip_note = self.chapter_notes[-1].get_last_note()
             except Exception as e:
@@ -142,10 +143,10 @@ class Kindle_notes:
       elif c == 'noteText':
 
         # save as either Highlight or Note, as appropriate
-        if last_note_type == 'Highlight':
+        if last_note_type == 'Highlight' or last_note_type == "标注":
           wip_note.text = div_contents
 
-        elif last_note_type == 'Note':
+        elif last_note_type == 'Note' or last_note_type == "笔记" :
           wip_note.note = div_contents
 
 
@@ -183,7 +184,7 @@ class Kindle_notes:
 
     # WARN("TODO: check if the file exists and handle as appropriate")
 
-    with open(outfile, 'w') as fp:
+    with open(outfile, 'w', encoding="utf8") as fp:
       fp.write(md)
 
     INFO("Wrote the output to {}".format(outfile), LOG_COLORS['GREEN'])
